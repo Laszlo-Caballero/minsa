@@ -29,12 +29,12 @@ export default function Aside() {
           <p className="text-SubtituloGris font-semibold text-xs">General</p>
         </div>
         <div>
-          <div className=" border text-linea"></div>
+          <div className=" border-t text-linea py-0.5"></div>
           <Link
             href="/"
             className={cx(
-              "flex gap-2 justify-center py-3 px-3 rounded-lg text-TituloNegro",
-              pathName === "/" && "bg-IconoHospital text-white"
+              "flex gap-2 py-3 px-3 rounded-lg text-TituloNegro",
+              pathName === "/" && "bg-bg text-IconoHospital"
             )}
           >
             <LuHouse className=" size-5.5" />
@@ -45,64 +45,87 @@ export default function Aside() {
           <p className="text-SubtituloGris font-semibold text-xs">Gestion</p>
         </div>
         <div>
-          <div className=" border text-linea"></div>
+          <div className=" borde-t border-t text-linea py-0.5"></div>
+
           <Link
             href="/cita/registrar"
             className={cx(
-              "flex gap-2 justify-center py-3 px-3 rounded-lg text-TituloNegro",
-              pathName === "/cita/registrar" && "bg-IconoHospital text-white"
+              "flex gap-2  py-3 px-3 rounded-lg text-TituloNegro",
+              pathName === "/cita/registrar" && "bg-bg text-IconoHospital"
             )}
           >
             <CiUser className=" size-5.5" />
             <p className="font-semibold text-[16px]">Registrar Citas</p>
           </Link>
+
           <Link
             href="/obstetras/registrar"
-            className="flex gap-2 justify-center py-3 px-3"
+            className={cx(
+              "flex gap-2 py-3 px-3 rounded-lg",
+              pathName === "/obstetras/registrar" && "bg-bg text-IconoHospital"
+            )}
           >
             <LuUserPlus className=" size-5.5" />
-            <p className="text-TituloNegro font-semibold text-[16px] ">
-              Resgitrar Obstetras
-            </p>
+            <p className="font-semibold text-[16px] ">Resgitrar Obstetras</p>
           </Link>
-          <Link href="/pacientes/registrar" className="flex gap-2  py-3 px-3">
-            <LuUsers className=" size-5.5" />
-            <p className="text-TituloNegro font-semibold text-[16px] ">
-              Registrar Pacientes
-            </p>
+
+          <Link
+            href="/pacientes/registrar"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/pacientes/registrar" && "bg-bg text-IconoHospital"
+            )}
+          >
+            <LuUsers className=" size-5.5 " />
+            <p className=" font-semibold text-[16px] ">Registrar Pacientes</p>
           </Link>
-          <Link href="/programas/registrar" className="flex gap-2 py-3 px-3">
+
+          <Link
+            href="/programas/registrar"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/programas/registrar" && "bg-bg text-IconoHospital"
+            )}
+          >
             <TbBackground className=" size-5.5" />
-            <p className="text-TituloNegro font-semibold text-[16px] ">
-              Registrar Programas
-            </p>
+            <p className="font-semibold text-[16px] ">Registrar Programas</p>
           </Link>
-          <Link href="/obstetras/historial" className="flex gap-2 py-3 px-3">
+
+          <Link
+            href="/obstetras/historial"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/obstetras/historial" && "bg-bg text-IconoHospital"
+            )}
+          >
             <FaHandHoldingMedical className=" size-5.5" />
-            <p className="text-TituloNegro font-semibold text-[16px] ">
-              Historial Obstetra
-            </p>
+            <p className="font-semibold text-[16px] ">Historial Obstetra</p>
           </Link>
         </div>
         <div className="py-1">
-          <p className="text-SubtituloGris font-semibold text-xs">General</p>
+          <p className="text-SubtituloGris font-semibold text-xs">Obstetra</p>
         </div>
         <div>
-          <div className=" border text-linea"></div>
-          <Link href="/atenciones/registrar" className="flex gap-2 py-3 px-3">
+          <div className=" border-t py-0.5 text-linea"></div>
+          <Link
+            href="/atenciones/registrar"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/atenciones/registrar" && "bg-bg text-IconoHospital"
+            )}
+          >
             <LuFileUser className=" size-5.5" />
-            <p className="text-TituloNegro font-semibold text-[16px] ">
-              Registrar Atenciones
-            </p>
+            <p className="font-semibold text-[16px] ">Registrar Atenciones</p>
           </Link>
           <Link
             href="/pacientes/historial"
-            className="flex w-full gap-2 py-3 px-3"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/pacientes/historial" && "bg-bg text-IconoHospital"
+            )}
           >
             <BiReceipt className=" size-5.5" />
-            <p className="text-TituloNegro font-semibold text-[16px] ">
-              Historial Paciente
-            </p>
+            <p className="font-semibold text-[16px] ">Historial Paciente</p>
           </Link>
         </div>
       </div>
