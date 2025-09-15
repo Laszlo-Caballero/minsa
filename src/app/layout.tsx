@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <div className="flex h-screen w-full">
           <Aside />
-          <main>{children}</main>
+          <main className="w-full">{children}</main>
         </div>
       </body>
     </html>
