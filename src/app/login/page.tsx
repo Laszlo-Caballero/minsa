@@ -1,6 +1,10 @@
+"use client";
 import React from "react";
 import { FaRegHospital } from "react-icons/fa";
 import { IoExitOutline } from "react-icons/io5";
+import { CiUser } from "react-icons/ci";
+import { GiPadlock } from "react-icons/gi";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function page() {
   return (
@@ -17,28 +21,31 @@ export default function page() {
         </p>
         <form>
           <p className=" text-SubtituloGris font-Inter text-[13px]">Usuario</p>
-          <input
-            className="border rounded-md outline-none text-SubtituloGris"
-            type="text"
-          ></input>
+          <div className="w-full items-center py-1 px-2 gap-2 flex border rounded-md outline-none text-SubtituloGris">
+            <CiUser className="size-5" />
+            <input className="w-full outline-none" type="text"></input>
+          </div>
         </form>
         <form className="py-3">
           <p className=" text-SubtituloGris font-Inter text-[13px]">
             Contraseña
           </p>
-          <input
-            className="border rounded-md flex outline-none text-SubtituloGris"
-            type="text"
-          ></input>
+          <div className="w-full items-center py-1 px-2 gap-2 flex border rounded-md outline-none text-SubtituloGris">
+            <GiPadlock className="size-5" />
+            <input className="w-full outline-none" type="text"></input>
+          </div>
         </form>
         <form>
           <p className=" text-SubtituloGris font-Inter text-[13px]">Captcha</p>
+          <div className="flex justify-center py-3">
+            <ReCAPTCHA sitekey="6LeVKs0rAAAAAIicDlMm1HpBltmOrNJRbdv6UZTj" />
+          </div>
           <p className="flex justify-center text-SubtituloGris font-Inter text-[13px]">
             Esto ayuda a proteger tu cuenta frente a accesos automatizados.
           </p>
         </form>
         <div className="flex justify-center items-center gap-2 py-3">
-          <p className=" text-SubtituloGris font-Inter text-[13px]">
+          <p className=" text-SubtituloGris font-Inter text-[13px] px-2">
             ¿Olvidaste tu contraseña?
           </p>
           <button className="flex border border-IconoHospital rounded-2xl py-3 px-5 bg-IconoHospital">
