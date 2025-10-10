@@ -13,9 +13,11 @@ import { useMutation } from "@/hooks/useMutation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas/login.schema";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [isValidCaptcha, setIsValidCaptcha] = useState(false);
+  const router = useRouter();
   const { isLoading, mutate } = useMutation<unknown, { token: string }>({
     mutationFn: async (data) => {
       const res = await axios.post(
@@ -45,6 +47,7 @@ export default function LoginPage() {
     },
     onSuccess() {
       toast.success("Login exitoso");
+      router.push("/");
     },
     onError() {
       toast.error("Error al iniciar sesion");
