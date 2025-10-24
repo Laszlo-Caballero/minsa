@@ -1,4 +1,5 @@
 "use client";
+import Checkbox from "@/componentes/ui/checkbox/Checkbox";
 import Input from "@/componentes/ui/input/Input";
 import Load from "@/componentes/ui/load/Load";
 import { ENV } from "@/config/env";
@@ -16,6 +17,8 @@ export default function Page() {
     reset,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm({
     resolver: zodResolver(ProgramaSchema),
   });
@@ -78,12 +81,13 @@ export default function Page() {
               error={errors.duracion?.message}
             />
 
-            <Input
+            <Checkbox
               label="Estado"
-              type="checkbox"
-              placeholder="Ej: Activo"
-              {...register("estado")}
-              error={errors.estado?.message}
+              placeholder={watch("estado") ? "Activo" : "Inactivo"}
+              value={watch("estado") || false}
+              onChange={(checked) => {
+                setValue("estado", checked);
+              }}
             />
 
             <Input
