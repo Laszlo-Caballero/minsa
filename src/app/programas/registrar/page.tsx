@@ -64,15 +64,6 @@ export default function Page() {
             </div>
             <div>
               <label className="text-sm font-medium text-SubtituloGris">
-                Responsable
-              </label>
-              <input
-                className="w-full border border-SubtituloGris rounded-xl px-3 py-2 mt-1"
-                placeholder="Ej: Lic. Paula Díaz"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-SubtituloGris">
                 Requisitos
               </label>
               <input
