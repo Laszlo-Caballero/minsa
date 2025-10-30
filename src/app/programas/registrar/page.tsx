@@ -56,7 +56,7 @@ export default function Page() {
         })}
       >
         <div className="bg-white rounded-2xl shadow-sm p-6 ">
-          <h2 className="font-semibold text-lg mb-4">Nuevo programa</h2>
+          <h2 className="font-semibold text-lg mb-4">Nuevo Programa</h2>
           <div className="grid grid-cols-2 gap-4">
             <Input
               label="Nombre del Programa"

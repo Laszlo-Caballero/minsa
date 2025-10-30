@@ -17,14 +17,14 @@ export default function Checkbox({
 }: CheckBoxProps) {
   return (
     <div className="flex flex-col gap-y-2">
-      <p className="text-sm">{label}</p>
+      <p className="text-sm text-SubtituloGris">{label}</p>
 
       <div
         onClick={() => {
           onChange?.(!value);
         }}
         className={cx(
-          "px-3 py-2 rounded-xl cursor-pointer border border-SubtituloGris flex items-center",
+          "px-3 py-2 rounded-xl cursor-pointer border border-SubtituloGris flex items-center text-SubtituloGris",
           className,
           value && "bg-IconoHospital/50 text-white"
         )}
