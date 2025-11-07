@@ -141,13 +141,13 @@ export default function Page() {
               Limpiar
             </button>
             <button className="flex-1 bg-IconoHospital text-white py-2 rounded-xl font-medium hover:bg-emerald-600">
-              Crear programa
+              Crear Paciente
             </button>
           </div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-200">
-          <h2 className="font-semibold text-lg mb-4">Programas registrados</h2>
+          <h2 className="font-semibold text-lg mb-4">Pacientes registrados</h2>
           <div className="flex items-center border border-SubtituloGris rounded-xl px-3 py-2 mb-4">
             <input
               type="text"
