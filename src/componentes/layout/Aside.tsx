@@ -66,7 +66,7 @@ export default function Aside() {
             )}
           >
             <LuUserPlus className=" size-5.5" />
-            <p className="font-semibold text-[16px] ">Resgitrar Obstetras</p>
+            <p className="font-semibold text-[16px] ">Registrar Obstetras</p>
           </Link>
 
           <Link

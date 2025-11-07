@@ -1,9 +1,12 @@
 "use client";
+import ProgramaCard from "@/componentes/ui/card-programa/CardPrograma";
 import Checkbox from "@/componentes/ui/checkbox/Checkbox";
 import Input from "@/componentes/ui/input/Input";
 import Load from "@/componentes/ui/load/Load";
 import { ENV } from "@/config/env";
 import { useMutation } from "@/hooks/useMutation";
+import { useQuery } from "@/hooks/useQuery";
+import { Programa } from "@/interfaces/response.interfaces";
 import { ProgramaSchema, ProgramType } from "@/schemas/programa.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -23,6 +26,7 @@ export default function Page() {
     resolver: zodResolver(ProgramaSchema),
   });
 
+
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: ProgramType) => {
       const response = await axios.post(`${ENV.API_URL}/programas`, data);
@@ -36,9 +40,21 @@ export default function Page() {
     },
   });
 
+
+  const {data, isLoading: isLoadPrograma} = useQuery<Programa[]>({
+    queryFn: async ()=>{
+      const res = await axios.get(`${ENV.API_URL}/programas`)
+      return res.data
+    },
+    dependencies:[isLoading]
+  })
+
+
+
+
   return (
     <div className="w-full h-full bg-linea min-h-screen">
-      {isLoading && <Load />}
+      {(isLoading|| isLoadPrograma) && <Load />}
 
       <div className="flex items-center justify-between bg-white py-5 px-6  border-SubtituloGris ">
         <h1 className="font-semibold text-xl">Registrar Programas</h1>
@@ -121,7 +137,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-200">
+        <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-200 max-h-screen overflow-auto">
           <h2 className="font-semibold text-lg mb-4">Programas registrados</h2>
           <div className="flex items-center border border-SubtituloGris rounded-xl px-3 py-2 mb-4">
             <input
@@ -130,6 +146,13 @@ export default function Page() {
               className="w-full outline-none text-sm ml-2"
             />
           </div>
+              <div className="max-h-full flex flex-col w-full overflow-y-scroll gap-y-2">
+              
+              {data?.map((p)=>(
+                <ProgramaCard programa={p} />
+              ))}
+              </div>
+          
         </div>
       </form>
     </div>
