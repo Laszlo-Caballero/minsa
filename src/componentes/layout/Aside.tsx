@@ -73,7 +73,7 @@ export default function Aside() {
             href="/pacientes"
             className={cx(
               "flex gap-2  py-3 px-3 rounded-lg",
-              pathName === "/pacientes/registrar" && "bg-bg text-IconoHospital"
+              pathName === "/pacientes" && "bg-bg text-IconoHospital"
             )}
           >
             <LuUsers className=" size-5.5 " />
@@ -94,7 +94,7 @@ export default function Aside() {
             href="/programas"
             className={cx(
               "flex gap-2  py-3 px-3 rounded-lg",
-              pathName === "/programas/registrar" && "bg-bg text-IconoHospital"
+              pathName === "/programas" && "bg-bg text-IconoHospital"
             )}
           >
             <TbBackground className=" size-5.5" />

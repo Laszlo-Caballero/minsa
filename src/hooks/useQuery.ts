@@ -16,27 +16,27 @@ export function useQuery<T>({ queryFn, dependencies }: QueryProps<T>) {
   const refreshData = (data: T) => {
     setFetch((prev) => ({ ...prev, data }));
   };
-
+  const fetchData = async () => {
+    try {
+      setFetch({
+        isLoading: true,
+        isError: false,
+        error: "",
+        data: undefined,
+      });
+      const data = await queryFn();
+      setFetch({ isLoading: false, data, isError: false, error: "" });
+    } catch (error: unknown) {
+      setFetch({ isLoading: false, isError: true, error: String(error) });
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setFetch({
-          isLoading: true,
-          isError: false,
-          error: "",
-          data: undefined,
-        });
-        const data = await queryFn();
-        setFetch({ isLoading: false, data, isError: false, error: "" });
-      } catch (error: unknown) {
-        setFetch({ isLoading: false, isError: true, error: String(error) });
-      }
-    };
     fetchData();
   }, [...(dependencies || [])]);
 
   return {
     ...fetch,
     refreshData,
+    refetch: fetchData,
   };
 }

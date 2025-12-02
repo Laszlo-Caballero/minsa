@@ -6,7 +6,7 @@ interface Props {
 
 const ProgramaCard: React.FC<Props> = ({ programa }) => {
   return (
-    <div className="w-full min-h-[250px] mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+    <div className="w-full min-h-min mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300">
       <div className="p-6">
         {/* Título y código */}
         <div className="flex items-center justify-between mb-2">
@@ -19,17 +19,17 @@ const ProgramaCard: React.FC<Props> = ({ programa }) => {
         </div>
 
         {/* Descripción */}
-        <p className="text-gray-600 text-sm mb-4">
-          {programa.descripcion}
-        </p>
+        <p className="text-gray-600 text-sm mb-4">{programa.descripcion}</p>
 
         {/* Detalles */}
         <div className="text-gray-700 text-sm space-y-1">
           <p>
-            <span className="font-medium">Duración:</span> {programa.duracion} meses
+            <span className="font-medium">Duración:</span> {programa.duracion}{" "}
+            meses
           </p>
           <p>
-            <span className="font-medium">Requisitos:</span> {programa.requisitos}
+            <span className="font-medium">Requisitos:</span>{" "}
+            {programa.requisitos}
           </p>
         </div>
 

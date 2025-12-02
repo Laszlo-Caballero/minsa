@@ -13,6 +13,9 @@ import { toast } from "sonner";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useState } from "react";
+import { useQuery } from "@/hooks/useQuery";
+import { Paciente, ResponseApi } from "@/interfaces/response.interfaces";
+import { CardPaciente } from "@/componentes/ui/card-paciente/CardPaciente";
 
 export default function Page() {
   const {
@@ -25,6 +28,24 @@ export default function Page() {
   } = useForm({
     resolver: zodResolver(PacienteSchema),
   });
+  const [search, setSearch] = useState("");
+
+  const {
+    isLoading: isLoadingPacientes,
+    data: pacientes,
+    refetch,
+  } = useQuery<ResponseApi<Paciente[]>>({
+    queryFn: async () => {
+      const url = new URL(`${ENV.API_URL}/pacientes`);
+      if (search) {
+        url.searchParams.append("search", search);
+      }
+
+      const res = await axios.get(url.toString());
+      return res.data;
+    },
+    dependencies: [search],
+  });
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: PacienteType) => {
@@ -33,6 +54,7 @@ export default function Page() {
     },
     onSuccess: () => {
       toast.success("Paciente registrado con éxito");
+      refetch();
     },
     onError: () => {
       toast.error("Error al registrar un Paciente");
@@ -153,8 +175,15 @@ export default function Page() {
               type="text"
               placeholder="Buscar por nombre o código"
               className="w-full outline-none text-sm ml-2"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+          <main className="flex flex-col w-full gap-2 max-h-[500px] h-full overflow-y-auto">
+            {pacientes?.data.map((p) => (
+              <CardPaciente paciente={p} key={p.IdPaciente} />
+            ))}
+          </main>
         </div>
       </form>
     </div>

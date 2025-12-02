@@ -37,9 +37,9 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     },
     onSuccess(data) {
       setToken(data.token);
-      setUser(data.data);
+      setUser(data);
 
-      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.data));
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data));
       localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
 
       window.cookieStore.set("token", data.token);

@@ -28,9 +28,7 @@ export interface User {
   role: string;
 }
 
-export interface ResponseAuth {
-  message: string;
-  data: User;
+export interface ResponseAuth extends User {
   token: string;
 }
 
@@ -39,4 +37,14 @@ export interface ResponseApi<T> {
   message: string;
   status: number;
   errors?: string[] | string;
+}
+export interface Paciente {
+  IdPaciente: number;
+  dni: number;
+  nombre: string;
+  apellidos: string;
+  fecha_nacimiento: string;
+  correo: string;
+  telefono: number;
+  direccion: string;
 }

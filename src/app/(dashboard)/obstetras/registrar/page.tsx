@@ -1,9 +1,12 @@
 "use client";
+import { ObstetraCard } from "@/componentes/ui/card-obstetra/CardObstetra";
 import Checkbox from "@/componentes/ui/checkbox/Checkbox";
 import Input from "@/componentes/ui/input/Input";
 import Load from "@/componentes/ui/load/Load";
 import { ENV } from "@/config/env";
 import { useMutation } from "@/hooks/useMutation";
+import { useQuery } from "@/hooks/useQuery";
+import { Obstetra, ResponseApi } from "@/interfaces/response.interfaces";
 import { ObstetraSchema, ObstetraType } from "@/schemas/obstetra.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -37,21 +40,37 @@ export default function page() {
       toast.error("Error al registrar un Obstetra");
     },
   });
+
+  const [search, setSearch] = useState("");
+  const { data, isLoading: isLoadObstetra } = useQuery<ResponseApi<Obstetra[]>>(
+    {
+      queryFn: async () => {
+        const url = new URL(`${ENV.API_URL}/obstetras`);
+        if (search) {
+          url.searchParams.append("search", search);
+        }
+
+        const res = await axios.get(url.toString());
+        return res.data;
+      },
+      dependencies: [isLoading, search],
+    }
+  );
   return (
-    <div className="w-full h-full bg-linea min-h-screen">
+    <div className="w-full h-full bg-linea flex flex-col overflow-y-auto">
       {isLoading && <Load />}
 
-      <div className="flex items-center justify-between bg-white py-5 px-6  border-SubtituloGris ">
+      <header className="flex sticky top-0 items-center justify-between bg-white py-5 px-6  border-SubtituloGris ">
         <h1 className="font-semibold text-xl">Registrar Obstetras</h1>
         <div className="flex gap-3">
           <button className="flex items-center gap-2 border border-gray-300 px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-50">
             Importar
           </button>
         </div>
-      </div>
+      </header>
 
       <form
-        className="grid grid-cols-2 gap-6 p-6"
+        className="grid grid-cols-2 gap-6 p-6 h-full"
         onSubmit={handleSubmit((data) => {
           mutate(data);
         })}
@@ -158,14 +177,21 @@ export default function page() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-200">
+        <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-200 max-h-screen overflow-auto">
           <h2 className="font-semibold text-lg mb-4">Obstetras registrados</h2>
           <div className="flex items-center border border-SubtituloGris rounded-xl px-3 py-2 mb-4">
             <input
               type="text"
               placeholder="Buscar por nombre o código"
               className="w-full outline-none text-sm ml-2"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
+          </div>
+          <div className="max-h-full flex flex-col w-full overflow-y-auto gap-y-2">
+            {data?.data.map((obstetra) => (
+              <ObstetraCard key={obstetra.IdObstetra} obstetra={obstetra} />
+            ))}
           </div>
         </div>
       </form>

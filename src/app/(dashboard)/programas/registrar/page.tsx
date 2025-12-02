@@ -10,7 +10,7 @@ import { Programa } from "@/interfaces/response.interfaces";
 import { ProgramaSchema, ProgramType } from "@/schemas/programa.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -38,19 +38,24 @@ export default function Page() {
       toast.error("Error al registrar el programa");
     },
   });
-
+  const [search, setSearch] = useState("");
   const { data, isLoading: isLoadPrograma } = useQuery<Programa[]>({
     queryFn: async () => {
-      const res = await axios.get(`${ENV.API_URL}/programas`);
+      const url = new URL(`${ENV.API_URL}/programas`);
+      if (search) {
+        url.searchParams.append("search", search);
+      }
+
+      const res = await axios.get(url.toString());
       const data = res.data as { data: Programa[] };
       return data.data;
     },
-    dependencies: [isLoading],
+    dependencies: [isLoading, search],
   });
 
   return (
-    <div className="w-full h-full bg-linea min-h-screen">
-      {(isLoading || isLoadPrograma) && <Load />}
+    <div className="w-full h-full bg-linea flex flex-col">
+      {isLoading && <Load />}
 
       <div className="flex items-center justify-between bg-white py-5 px-6  border-SubtituloGris ">
         <h1 className="font-semibold text-xl">Registrar Programas</h1>
@@ -62,7 +67,7 @@ export default function Page() {
       </div>
 
       <form
-        className="grid grid-cols-2 gap-6 p-6"
+        className="grid grid-cols-2 h-full gap-6 p-6"
         onSubmit={handleSubmit((data) => {
           mutate(data);
         })}
@@ -140,9 +145,11 @@ export default function Page() {
               type="text"
               placeholder="Buscar por nombre o código"
               className="w-full outline-none text-sm ml-2"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className="max-h-full flex flex-col w-full overflow-y-scroll gap-y-2">
+          <div className="max-h-full flex flex-col w-full overflow-y-auto gap-y-2">
             {data?.map((p) => (
               <ProgramaCard programa={p} />
             ))}
