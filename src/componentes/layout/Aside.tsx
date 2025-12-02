@@ -70,6 +70,16 @@ export default function Aside() {
           </Link>
 
           <Link
+            href="/pacientes"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/pacientes/registrar" && "bg-bg text-IconoHospital"
+            )}
+          >
+            <LuUsers className=" size-5.5 " />
+            <p className=" font-semibold text-[16px] "> Pacientes</p>
+          </Link>
+          <Link
             href="/pacientes/registrar"
             className={cx(
               "flex gap-2  py-3 px-3 rounded-lg",
@@ -80,6 +90,16 @@ export default function Aside() {
             <p className=" font-semibold text-[16px] ">Registrar Pacientes</p>
           </Link>
 
+          <Link
+            href="/programas"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/programas/registrar" && "bg-bg text-IconoHospital"
+            )}
+          >
+            <TbBackground className=" size-5.5" />
+            <p className="font-semibold text-[16px] "> Programas</p>
+          </Link>
           <Link
             href="/programas/registrar"
             className={cx(

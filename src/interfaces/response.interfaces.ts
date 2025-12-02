@@ -33,3 +33,10 @@ export interface ResponseAuth {
   data: User;
   token: string;
 }
+
+export interface ResponseApi<T> {
+  data: T;
+  message: string;
+  status: number;
+  errors?: string[] | string;
+}

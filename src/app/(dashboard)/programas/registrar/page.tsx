@@ -26,7 +26,6 @@ export default function Page() {
     resolver: zodResolver(ProgramaSchema),
   });
 
-
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: ProgramType) => {
       const response = await axios.post(`${ENV.API_URL}/programas`, data);
@@ -40,21 +39,18 @@ export default function Page() {
     },
   });
 
-
-  const {data, isLoading: isLoadPrograma} = useQuery<Programa[]>({
-    queryFn: async ()=>{
-      const res = await axios.get(`${ENV.API_URL}/programas`)
-      return res.data
+  const { data, isLoading: isLoadPrograma } = useQuery<Programa[]>({
+    queryFn: async () => {
+      const res = await axios.get(`${ENV.API_URL}/programas`);
+      const data = res.data as { data: Programa[] };
+      return data.data;
     },
-    dependencies:[isLoading]
-  })
-
-
-
+    dependencies: [isLoading],
+  });
 
   return (
     <div className="w-full h-full bg-linea min-h-screen">
-      {(isLoading|| isLoadPrograma) && <Load />}
+      {(isLoading || isLoadPrograma) && <Load />}
 
       <div className="flex items-center justify-between bg-white py-5 px-6  border-SubtituloGris ">
         <h1 className="font-semibold text-xl">Registrar Programas</h1>
@@ -146,13 +142,11 @@ export default function Page() {
               className="w-full outline-none text-sm ml-2"
             />
           </div>
-              <div className="max-h-full flex flex-col w-full overflow-y-scroll gap-y-2">
-              
-              {data?.map((p)=>(
-                <ProgramaCard programa={p} />
-              ))}
-              </div>
-          
+          <div className="max-h-full flex flex-col w-full overflow-y-scroll gap-y-2">
+            {data?.map((p) => (
+              <ProgramaCard programa={p} />
+            ))}
+          </div>
         </div>
       </form>
     </div>
