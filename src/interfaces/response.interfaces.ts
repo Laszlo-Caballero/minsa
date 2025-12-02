@@ -1,4 +1,3 @@
-
 export interface Obstetra {
   IdObstetra: number;
   dni: number;
@@ -20,4 +19,17 @@ export interface Programa {
   estado: boolean;
   descripcion: string;
   requisitos: string;
+}
+
+export interface User {
+  userId: number;
+  username: string;
+  password: string;
+  role: string;
+}
+
+export interface ResponseAuth {
+  message: string;
+  data: User;
+  token: string;
 }

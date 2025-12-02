@@ -13,11 +13,12 @@ import { useMutation } from "@/hooks/useMutation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas/login.schema";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const [isValidCaptcha, setIsValidCaptcha] = useState(false);
-  const router = useRouter();
+  const { login } = useAuth();
+
   const { isLoading, mutate } = useMutation<unknown, { token: string }>({
     mutationFn: async (data) => {
       const res = await axios.post(
@@ -33,24 +34,6 @@ export default function LoginPage() {
     },
     onError: () => {
       toast.error("Error al validar el captcha");
-    },
-  });
-
-  const { mutate: mutateLogin } = useMutation<
-    unknown,
-    { username: string; password: string }
-  >({
-    mutationFn: async (data) => {
-      const res = await axios.post(`${ENV.API_URL}/users/login`, data);
-
-      return res.data;
-    },
-    onSuccess() {
-      toast.success("Login exitoso");
-      router.push("/");
-    },
-    onError() {
-      toast.error("Error al iniciar sesion");
     },
   });
 
@@ -73,7 +56,7 @@ export default function LoginPage() {
             return;
           }
 
-          mutateLogin(data);
+          login(data);
         })}
       >
         <div className="flex gap-2 justify-center py-2 ">
