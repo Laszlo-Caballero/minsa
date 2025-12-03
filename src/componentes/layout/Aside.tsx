@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { FaRegHospital } from "react-icons/fa";
-import { LuHouse } from "react-icons/lu";
+import { LuHouse, LuLogOut } from "react-icons/lu";
 import { CiUser } from "react-icons/ci";
 import { LuUserPlus } from "react-icons/lu";
 import { LuUsers } from "react-icons/lu";
@@ -12,12 +12,13 @@ import { LuFileUser } from "react-icons/lu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import cx from "@/utils/cx";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Aside() {
   const pathName = usePathname();
-
+  const { logout } = useAuth();
   return (
-    <div className="w-[264px] bg-white h-full py-5 px-4 border-r border-linea">
+    <div className="w-[264px] flex flex-col bg-white h-full py-5 px-4 border-r border-linea">
       <div className="flex gap-2 justify-center ">
         <FaRegHospital className="text-IconoHospital size-5" />
         <p className="text-TituloNegro font-semibold">
@@ -159,6 +160,18 @@ export default function Aside() {
             <p className="font-semibold text-[16px] ">Historial Paciente</p>
           </Link>
         </div>
+      </div>
+
+      <div className="mt-auto w-full">
+        <button className="flex items-center w-full justify-center cursor-pointer">
+          <LuLogOut className=" size-5.5 text-red-600" />
+          <p
+            onClick={logout}
+            className="font-semibold text-[16px] text-red-600"
+          >
+            Cerrar Sesión
+          </p>
+        </button>
       </div>
     </div>
   );

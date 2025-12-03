@@ -2,7 +2,11 @@
 
 import { ENV } from "@/config/env";
 import { useMutation } from "@/hooks/useMutation";
-import { ResponseAuth, User } from "@/interfaces/response.interfaces";
+import {
+  ResponseApi,
+  ResponseAuth,
+  User,
+} from "@/interfaces/response.interfaces";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
@@ -27,7 +31,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const router = useRouter();
 
   const { mutate: login, isLoading: isLoadingLogin } = useMutation<
-    ResponseAuth,
+    ResponseApi<ResponseAuth>,
     { username: string; password: string }
   >({
     mutationFn: async (data) => {
@@ -35,7 +39,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
       return res.data;
     },
-    onSuccess(data) {
+    onSuccess({ data }) {
       setToken(data.token);
       setUser(data);
 
