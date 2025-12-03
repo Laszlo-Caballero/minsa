@@ -25,6 +25,7 @@ export interface User {
   userId: number;
   username: string;
   password: string;
+  obstetra: Obstetra;
   role: string;
 }
 
