@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { FaRegHospital } from "react-icons/fa";
-import { LuHouse, LuLogOut } from "react-icons/lu";
+import { LuHouse, LuLogOut, LuClipboardList, LuTarget } from "react-icons/lu";
 import { CiUser } from "react-icons/ci";
 import { LuUserPlus } from "react-icons/lu";
 import { LuUsers } from "react-icons/lu";
@@ -122,17 +122,6 @@ export default function Aside() {
             <TbBackground className=" size-5.5" />
             <p className="font-semibold text-[16px] ">Registrar Programas</p>
           </Link>
-
-          <Link
-            href="/obstetras/historial"
-            className={cx(
-              "flex gap-2  py-3 px-3 rounded-lg",
-              pathName === "/obstetras/historial" && "bg-bg text-IconoHospital"
-            )}
-          >
-            <FaHandHoldingMedical className=" size-5.5" />
-            <p className="font-semibold text-[16px] ">Historial Obstetra</p>
-          </Link>
         </div>
         <div className="py-1">
           <p className="text-SubtituloGris font-semibold text-xs">Obstetra</p>
@@ -149,15 +138,26 @@ export default function Aside() {
             <LuFileUser className=" size-5.5" />
             <p className="font-semibold text-[16px] ">Registrar Atenciones</p>
           </Link>
+
           <Link
-            href="/pacientes/historial"
+            href="/atenciones"
             className={cx(
               "flex gap-2  py-3 px-3 rounded-lg",
-              pathName === "/pacientes/historial" && "bg-bg text-IconoHospital"
+              pathName === "/atenciones" && "bg-bg text-IconoHospital"
             )}
           >
-            <BiReceipt className=" size-5.5" />
-            <p className="font-semibold text-[16px] ">Historial Paciente</p>
+            <LuClipboardList className=" size-5.5" />
+            <p className="font-semibold text-[16px] ">Atenciones</p>
+          </Link>
+          <Link
+            href="/metas"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg",
+              pathName === "/metas" && "bg-bg text-IconoHospital"
+            )}
+          >
+            <LuTarget className=" size-5.5" />
+            <p className="font-semibold text-[16px] ">Metas</p>
           </Link>
         </div>
       </div>

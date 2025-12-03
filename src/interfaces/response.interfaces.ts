@@ -59,3 +59,32 @@ export interface Cita {
   paciente: Paciente;
   programa: Programa;
 }
+
+export interface Atencion {
+  atencionId: number;
+  fecha_atencion: string;
+  diagnostico: string;
+  nota_clinica: string;
+  estado: string;
+  cita: Cita;
+  paciente: Paciente;
+  obstetra: Obstetra;
+}
+
+export interface Meta {
+  metaId: number;
+  objetivo: string;
+  descripcion: string;
+  estado: string;
+  valor: number;
+  meta_display: string;
+  porcentaje: number;
+  color?: string;
+}
+
+export interface Inicio {
+  citas: Cita[];
+  metas: Meta[];
+  countCitasEsteMes: number;
+  countCitasHoy: number;
+}

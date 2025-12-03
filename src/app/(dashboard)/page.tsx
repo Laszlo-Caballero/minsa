@@ -1,6 +1,28 @@
-import Image from "next/image";
+import { ENV } from "@/config/env";
+import {
+  Inicio as InicioResponse,
+  ResponseApi,
+} from "@/interfaces/response.interfaces";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { CardMeta } from "@/componentes/ui/card-meta/CardMeta";
+import { CardCita } from "@/componentes/ui/card-cita/CardCita";
 
-export default function Inicio() {
+export default async function Inicio() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  const res = await fetch(`${ENV.API_URL}/inicio`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
+
+  const inicioData: ResponseApi<InicioResponse> = await res.json();
+
+  const data = inicioData.data;
+
   return (
     <div className="w-full h-full bg-linea">
       <div className="flex items-center justify-between bg-white py-5 px-6  border-SubtituloGris ">
@@ -16,45 +38,49 @@ export default function Inicio() {
               información clave.
             </p>
           </div>
-          <div className="flex gap-2">
-            <button className=" bg-bgatajos text-black font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-50 transition ">
-              Nueva cita
-            </button>
-            <button className="bg-bgatajos font-semibold text-black px-4 py-2 rounded-xl text-sm hover:bg-gray-50 transition ">
-              Ver historial
-            </button>
-          </div>
         </div>
 
         <div className="bg-white  border-SubtituloGris rounded-2xl p-5 mb-6">
           <h2 className="font-semibold mb-4 px-1">Atajos rápidos</h2>
 
           <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 bg-bgatajos border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black ">
+            <Link
+              href="/cita/registrar"
+              className="flex items-center justify-center gap-2 bg-bgatajos border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black "
+            >
               Registrar Cita
-            </button>
+            </Link>
 
-            <button className="flex items-center justify-center gap-2 bg-bgatajos  border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black ">
+            <Link
+              href="/obstetras"
+              className="flex items-center justify-center gap-2 bg-bgatajos  border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black "
+            >
               Conocer Obstetras
-            </button>
+            </Link>
 
-            <button className="flex items-center justify-center gap-2 bg-bgatajos  border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black ">
+            <Link
+              href="/programa/registrar"
+              className="flex items-center justify-center gap-2 bg-bgatajos  border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black "
+            >
               Registrar Programa
-            </button>
+            </Link>
 
-            <button className="flex items-center justify-center gap-2 bg-bgatajos  border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black">
+            <Link
+              href="/pacientes"
+              className="flex items-center justify-center gap-2 bg-bgatajos  border-SubtituloGris rounded-xl py-4 px-2 text-sm font-medium text-black"
+            >
               Ver Historial
-            </button>
+            </Link>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div className="bg-white  border-SubtituloGris rounded-2xl p-5 ">
             <h3 className="text-black text-sm font-semibold mb-2">
               Panorama general
             </h3>
             <p className="text-4xl font-semibold text-gray-800 leading-tight">
-              126
+              {data.countCitasEsteMes}
             </p>
             <p className="text-xs text-SubtituloGris mt-2">
               Pacientes atendidos este mes
@@ -65,18 +91,9 @@ export default function Inicio() {
               Citas de hoy
             </h3>
             <p className="text-4xl font-semibold text-gray-800 leading-tight">
-              18
+              {data.countCitasHoy}
             </p>
             <p className="text-xs text-SubtituloGris mt-2">3 en urgencia</p>
-          </div>
-          <div className="bg-white  border-SubtituloGris rounded-2xl p-5 ">
-            <h3 className="text-black text-sm font-semibold mb-2">
-              Tasa de atención
-            </h3>
-            <p className="text-4xl font-semibold text-gray-800 leading-tight">
-              84%
-            </p>
-            <p className="text-xs text-SubtituloGris mt-2">Meta 90%</p>
           </div>
         </div>
 
@@ -86,6 +103,15 @@ export default function Inicio() {
             <h3 className="font-semibold text-base mb-4 text-gray-800">
               Citas más próximas
             </h3>
+            <div className="flex flex-col gap-4">
+              {data.citas.length > 0 ? (
+                data.citas.map((cita) => (
+                  <CardCita key={cita.citaId} cita={cita} />
+                ))
+              ) : (
+                <p className="text-sm text-gray-500">No hay citas próximas.</p>
+              )}
+            </div>
           </div>
 
           {/* Metas del mes */}
@@ -94,87 +120,20 @@ export default function Inicio() {
               Metas del mes
             </h3>
 
-            {/* Atendidas */}
-            <div className="mb-5">
-              <div className="flex justify-between items-center mb-2">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm text-gray-500 font-medium">Atendidas</p>
-                  <span className="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-lg">
-                    Meta 300
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-gray-800">242</p>
-              </div>
-              <div className="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                <div
-                  className="h-1.5 bg-teal-400 rounded-full"
-                  style={{ width: "80%" }}
-                ></div>
-              </div>
-            </div>
-
-            {/* Pendientes */}
-            <div className="mb-5">
-              <div className="flex justify-between items-center mb-2">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm text-gray-500 font-medium">
-                    Pendientes
-                  </p>
-                  <span className="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-lg">
-                    Meta &lt; 30
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-gray-800">28</p>
-              </div>
-              <div className="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                <div
-                  className="h-1.5 bg-teal-400 rounded-full"
-                  style={{ width: "93%" }}
-                ></div>
-              </div>
-            </div>
-
-            {/* Canceladas */}
-            <div className="mb-5">
-              <div className="flex justify-between items-center mb-2">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm text-gray-500 font-medium">
-                    Canceladas
-                  </p>
-                  <span className="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-lg">
-                    Meta &lt; 10
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-gray-800">12</p>
-              </div>
-              <div className="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                <div
-                  className="h-1.5 bg-teal-400 rounded-full"
-                  style={{ width: "60%" }}
-                ></div>
-              </div>
-            </div>
-
-            {/* Nuevos programas */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm text-gray-500 font-medium">
-                    Nuevos programas
-                  </p>
-                  <span className="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-lg">
-                    Meta 8
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-gray-800">5</p>
-              </div>
-              <div className="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                <div
-                  className="h-1.5 bg-teal-400 rounded-full"
-                  style={{ width: "62%" }}
-                ></div>
-              </div>
-            </div>
+            {data.metas.length > 0 ? (
+              data.metas.map((meta) => (
+                <CardMeta
+                  key={meta.metaId}
+                  title={meta.objetivo}
+                  meta={meta.meta_display}
+                  value={meta.valor}
+                  percentage={meta.porcentaje}
+                  color={meta.color || "teal-400"}
+                />
+              ))
+            ) : (
+              <p className="text-sm text-gray-500">No hay metas disponibles.</p>
+            )}
 
             {/* Leyenda */}
             <div className="flex justify-start gap-3 text-xs">
