@@ -48,3 +48,13 @@ export interface Paciente {
   telefono: number;
   direccion: string;
 }
+
+export interface Cita {
+  citaId: number;
+  fecha_cita: string;
+  estado: string;
+  motivo: string;
+  obstetra: Obstetra;
+  paciente: Paciente;
+  programa: Programa;
+}

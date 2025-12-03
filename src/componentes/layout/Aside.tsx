@@ -48,6 +48,17 @@ export default function Aside() {
           <div className=" borde-t border-t text-linea py-0.5"></div>
 
           <Link
+            href="/cita"
+            className={cx(
+              "flex gap-2  py-3 px-3 rounded-lg text-TituloNegro",
+              pathName === "/cita" && "bg-bg text-IconoHospital"
+            )}
+          >
+            <CiUser className=" size-5.5" />
+            <p className="font-semibold text-[16px]">Citas</p>
+          </Link>
+
+          <Link
             href="/cita/registrar"
             className={cx(
               "flex gap-2  py-3 px-3 rounded-lg text-TituloNegro",

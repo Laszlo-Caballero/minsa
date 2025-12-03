@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@tanstack/react-table": "^8.21.3",
     "@types/react-google-recaptcha": "^2.1.9",
     "axios": "^1.11.0",
     "clsx": "^2.1.1",
